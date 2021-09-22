@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: stakater-backend-service-service-ingress
+spec:
+  rules:
+    - host: stakater-backend-service-service.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: stakater-backend-service-service
+                port:
+                  number: 8077
+          - path: /main
+            pathType: Prefix
+            backend:
+              service:
+                name: stakater-backend-service-service
+                port:
+                  number: 8077

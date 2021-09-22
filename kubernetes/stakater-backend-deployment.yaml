@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: stakater-backend
+  labels:
+    app: stakater-backend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stakater-backend
+  template:
+    metadata:
+      labels:
+        app: stakater-backend
+    spec:
+      containers:
+        - name: stakater-backend
+          image:  lawrence2021/stakater-backend:latest
+          ports:
+            - containerPort: 8077
+          env:
+            - name: NAME
+              value: Lawrence
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: stakater-backend-service
+spec:
+  selector:
+    app: stakater-backend
+  ports:
+    - protocol: TCP
+      port: 8077
+      targetPort: 8077

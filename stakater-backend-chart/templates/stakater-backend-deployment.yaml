@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{.Values.name}}
+  labels:
+    app: {{.Values.name}}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{.Values.name}}
+  template:
+    metadata:
+      labels:
+        app: {{.Values.name}}
+    spec:
+      containers:
+        - name: {{.Values.name}}
+          image:  {{.Values.deployment.image}}:latest
+          ports:
+            - containerPort: 8077
+          env:
+            - name: NAME
+              value: Lawrence
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{.Values.name}}-service
+spec:
+  selector:
+    app: {{.Values.name}}
+  ports:
+    - protocol: TCP
+      port: 8077
+      targetPort: 8077
